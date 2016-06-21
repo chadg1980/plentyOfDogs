@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<HTML>
+
+<head>
+<!-- Remove Display Errors Before Publishing-->
+
+<meta charset="utf-8">
+<script src="jquery.min.js"> </script>
+<title>Plenty of Dogs</title>
+<link 		rel="stylesheet" 
+			type="text/css"
+			href="pod.css">
+			
+		
+	<script type = "text/javascript">
+		
+		function check_username()
+		{
+			// I got help from my classmate Latham Fell on this function
+			$("#results").text("checking login data");
+			var username = $('#username').val();
+			var password = $('#password').val();
+			var page = "username.php";
+			
+			
+			$.ajax({
+					type: 'POST',
+					url:'username.php',
+					data: "username="+username+"&password="+password, 
+					success: successfunction,
+					error: errorFun});
+						
+					
+					function errorFun(jqXHR, data, info)
+					{	
+						$("#results").html("The requested page was " + page +"<br>");
+						$("#results").append("The error number returned was " + jqXHR.status +"<br>");
+						$("#results").append("The error message was " + info +"<br>");
+					}
+										
+					function successfunction(data, info)
+					{
+						
+						if(data == 1)
+							{
+								
+								window.location.href="shelteradmin.php"
+							}
+						else if(data == 3)
+							{
+						$("#results").html("Log in failed,<br> try again or<br><a href='registerform.html'> register here</a></li></ul>");	
+							}
+						else
+							{
+							
+     $("#results").html("<p>username and password didn't work out </p> <p> try again or <br><a href='register.php'> register here</a> ");
+							}
+					}
+				
+		}
+	
+	
+		</script>
+					
+	
+				
+			
+		
+		
+
+
+</head>
+
+<body>
+
+
+	<!-- WRAPPER-->
+	<div id="wrapper" class="wrapper" >
+
+	<!-- HEADER-->
+	<div id="header" class = "header" >
+	<h1>Plenty of Dogs</h1>
+	<img id="podheader" class="podheader" title="dogfamily" alt="dog with family" src="pics/podheader.jpg" >
+	</div>
+
+
+	<!-- Main Content-->
+	<div id="center" class="center" >
+	
+	<form id="login" class="login" name ="login" method="post" enctype="multipart/form-data">
+			<table>
+				<tr> <td>Please log in</td></tr>
+				<tr> <td>username:<input type="text" id = "username" name="username" required></td></tr>
+					
+				<tr> <td>password:<input type="password" id ="password" name="password" required></td></tr>
+					
+				<tr> <td><button type="button" id="log" onclick ="check_username()" >Log in </button></td></tr>
+				<tr> <td><a href="registerform.html"> or register</a></td></tr>
+			</table>
+		</form>
+			
+	</div>
+	
+	<div id="results">
+	</div>
+
+	<!-- LEFT Hand nav Bar-->
+	<div class ="lh" id ="lh">
+	</div>
+
+	
+	<!-- FOOTER-->
+	<div id="footer" class = "footer">
+	<a href="index.php" id="shelter" >Plenty of Dogs<br></a>
+	</div>
+
+
+
+
+</div>
+
+
+</body>
+</HTML>

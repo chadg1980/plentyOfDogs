@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<HTML>
+
+<head>
+<script src="jquery.min.js"> </script>
+<!-- Remove Display Errors Before Publishing-->
+
+<meta charset="utf-8">
+<title>Plenty of Dogs</title>
+<link 		rel="stylesheet" 
+			type="text/css"
+			href="pod.css">
+			
+			
+		<script type = "text/javascript">
+		
+function user_register()
+{
+		
+	$("#results").text("Checking Data");
+	
+	var sheltername = $('#sheltername').val();
+	var title = $('#title').val();
+	var username = $('#username').val();
+	var password = $('#password').val();
+	var repassword = $('#repassword').val();
+	var page = "register.php";
+		
+	
+	//exists(username);
+	
+	if (password == repassword)
+	{
+		if (password.length >= 8)
+		{
+			if(username.length >= 4 && username.length <= 25)
+			{
+				
+					
+					$.ajax({
+						type: 'POST',
+						url:'register.php',
+						data: "sheltername="+sheltername+"&title="+title+"&username="+username+"&password="+password, 
+						success: successfunc,
+						error: errorF});
+						
+						function errorF(jqXHR, data, info)
+					{	
+						$("#results").html("The requested page was " + page +"<br>");
+						$("#results").append("The error number returned was " + jqXHR.status +"<br>");
+						$("#results").append("The error message was " + info +"<br>");
+					}
+					
+					function successfunc(data, info)
+					{
+						if( data == 1)
+						{
+						
+						$("#results").html("Welcom "+username+"<br>");
+						$("#results").html("Registration Success <a href=shelterlogin.html> Log In</a> ");
+						}
+						else
+						{
+						
+						$("#results").append("<br>username: "+username+" is taken");
+						}
+					}
+				
+			
+				
+			
+		 }
+		 else
+			$("#results").append("<br><b>username needs to be between 4 and 25 characters</b>");
+		
+		
+		}
+		else
+			$("#results").append("<br><b>Passwords needs to be longer than 8 characters</b>");
+	}
+	else
+		$("#results").append("<br><b>Passwords do not match</b>");
+				
+	
+
+}
+
+		
+
+		</script>
+		
+</head>
+
+<body>
+
+
+	<!-- WRAPPER-->
+	<div id="wrapper" class="wrapper" >
+
+	<!-- HEADER-->
+	<div id="header" class = "header" >
+	<h1>Plenty of Dogs</h1>
+	<img id="podheader" class="podheader" title="dogfamily" alt="dog with family" src="pics/podheader.jpg" >
+	</div>
+
+
+	<!-- Main Content-->
+	<div id="center" class="center" >
+	
+	<form id="register" class="register" name ="register" method="post" enctype="multipart/form-data">
+	<table>
+		<tr><td>Shelter name:</td>
+			<td> <input type='text' id ="sheltername" name ='sheltername' required></td></tr>
+			<tr><td>Your title at the shelter:</td><td> <input type='text' id ="title" name='title' ></td></tr>
+			<tr><td>Choose a user name:</td><td><input type = "text" id ="username" name='username' required></td></tr>
+			<tr><td>Choose a password: </td><td><input type = "password" id = "password" name='password' required></td></tr>
+			<tr><td>Retype your password</td><td><input type = "password" id = "repassword" name='repassword' required></td></tr>
+			<tr><td><button type="button" onclick ="user_register()" >register</button></td></tr>
+			
+	</table>
+		
+	</form>
+	<p> The username needs to be longer that 4 characters, </p><p> and the password needs to be at least 8 characters</p>
+	
+	</div>
+	
+	<div id="results">
+	
+	</div>
+
+	<!-- LEFT Hand nav Bar-->
+	<div class ="lh" id ="lh">
+	
+	</div>
+
+	
+	<!-- FOOTER-->
+	<div id="footer" class = "footer">
+	<a href="index.php" id="shelter" >Plenty of Dogs</a>
+	</div>
+
+
+
+
+</div>
+
+
+</body>
+</HTML>
